@@ -1,5 +1,5 @@
 <?php
-namespace App\Model;
+namespace GORM;
 class Utils{
 	protected static $instance;
 	

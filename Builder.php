@@ -1,4 +1,6 @@
-mespace App\Model;
+<?php
+
+namespace GORM;
 trait Builder
 {
 	private static $select	= "SELECT * FROM ";

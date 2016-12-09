@@ -1,5 +1,5 @@
 <?php
-namespace App\Model;
+namespace GORM;
 use PDO;
 class Model{
 	use Builder;

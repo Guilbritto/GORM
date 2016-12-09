@@ -1,5 +1,5 @@
 <?php
-namespace App\Model;
+namespace GORM;
 use PDO;
 class ConnectionFactory{
 	private static $driver	=	null;
