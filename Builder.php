@@ -13,6 +13,7 @@ trait Builder
     public static  $condition;
     public static  $table;
     public static  $sql;
+    
     // Gera o SQL da classe carregada na Model
 	public function makeInsert($class){
         $array = $class->toArray();
@@ -40,6 +41,7 @@ trait Builder
     public function makeSelect($class){
         $class = $class->toArray();
         $temp = self::$select.self::$table;
+        
         
         //Faz um inner Join
         if (isset(self::$condition['inner'])){
@@ -118,8 +120,10 @@ trait Builder
                 }
             }
         }
-        echo $temp;
+        self::$sql = $temp;
+        
     }
+
     public function makeUpdate($class){
         $class = $class->toArray();
         $temp = null;
@@ -140,6 +144,3 @@ trait Builder
     
     
 }
-/*
-*
-*/

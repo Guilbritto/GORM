@@ -3,20 +3,13 @@ namespace GORM;
 use PDO;
 class Model{
 	use Builder;
-	protected  	$class;
-	/*public 		$mode = array(
-		"driver" 	=> "mysql",
-		"host"		=> "mysql.hostinger.com.br",
-		"dbname"	=> "u171232023_imobi",
-		"user"		=> "u171232023_imobi",
-		"pass"		=> "v`b&]Q^|2>/Jk"
-		);*/
+	protected  		$class;
 		public 		$mode = array(
 		"driver" 	=> "mysql",
 		"host"		=> "31.220.104.130",
-		"dbname"	=> "u172775243_imobi",
-		"user"		=> "u172775243_imobi",
-		"pass"		=> "MHLJC7tA969"
+		"dbname"	=> "u350275562_aetub", //u350275562_aetub
+		"user"		=> "u350275562_aetub", //u350275562_aetub
+		"pass"		=> "Z0kbFAWsap" //Z0kbFAWsap
 	);
 	/**
 	*	Salva um registro no banco de dados
@@ -40,9 +33,9 @@ class Model{
 		Builder::makeSelect($this->class);
 		$con                = new ConnectionFactory($this->mode);
 		$db                 = $con->getInstance();
-		// $linha              = $db->query(Builder::$sql);
-		// $r                  = $linha->fetchAll(PDO::FETCH_ASSOC);
-		return Builder::$sql;
+		$consulta           = $db->query(Builder::$sql);
+		$r 		            = $consulta->fetchAll(PDO::FETCH_ASSOC);
+		return $r;
 	}
 	/**
 	*	Atualiza informação conforme o objeto que chamou está função
@@ -64,5 +57,6 @@ class Model{
 		Builder::$table = str_replace("\\", "/", strtolower(get_called_class()));
 		Builder::$table = explode('/', Builder::$table);
 		Builder::$table = Builder::$table[3];	
+
 	}
 }
