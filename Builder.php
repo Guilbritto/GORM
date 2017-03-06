@@ -20,9 +20,11 @@ trait Builder
         $size 	= count($array);
         $i 		= 0;
     	$chave 	= "("; // irá receber o campo
-        $valor 	= "("; // irá receber o valor do campo
+        $valor 	= "("; // irá receber o valor do campo 
         
         foreach ($array as $key => $value) {
+          
+            $value = addslashes($value);
             if($i < ($size - 1) ){
                 $chave  .= $key.", ";
                 $valor  .= "'".$value."', ";
@@ -35,14 +37,20 @@ trait Builder
         $retorno = ["key" => $chave, "value" => $valor ];
         self::$sql = self::$insert.self::$table." ".$retorno['key']." values ".$retorno['value'];
     }
+
     /**
-    *   Gera SQL para select com ou sem Where
+    *   Gera SQL para select 
     */
     public function makeSelect($class){
         $class = $class->toArray();
         $temp = self::$select.self::$table;
         
-        
+        //Insere o que voce quer procurar no seu select
+        if (isset(self::$condition['select'])){
+            $option = self::$condition['select'];
+            $temp = str_replace("*", $option, $temp);
+          
+        }
         //Faz um inner Join
         if (isset(self::$condition['inner'])){
             $inner = self::$condition['inner'];
@@ -51,8 +59,7 @@ trait Builder
                 foreach ($value as $key => $values) {
                     $temp .= $key."=".$values;
                 }
-            }
-            
+            } 
         }
         // Monta um Where
         if (isset(self::$condition["where"])){
@@ -94,7 +101,9 @@ trait Builder
                 // array("OR" => array('key' => value))
                 }elseif (isset($where["OR"])) {
                     $count = count($where['OR']);
+			         $i=0;
                     foreach ($value as $key => $values) {
+                        
                         $i++;
                         if($i<$count){
                             if (is_string($values)){
@@ -120,26 +129,25 @@ trait Builder
                 }
             }
         }
+        ############ FIM DO WHERE ####################### 
         self::$sql = $temp;
         
     }
-
+    
     public function makeUpdate($class){
         $class = $class->toArray();
         $temp = null;
         $id = $class['id'];
         unset($class['id']);
         foreach ($class as $key => $value) {
+            $value = addslashes($value);
             if (empty($value)){
             }else{
-                if($key == "id"){
-                }else{
-                }
-                $temp .= " $key=$value";
+                $temp .= " $key='$value',";
             }
         }
+        $temp = substr($temp, 0, -1);
         self::$sql = self::$update.self::$table.self::$set.$temp.self::$where." id=".$id;
-        echo self::$sql;
     }
     
     
