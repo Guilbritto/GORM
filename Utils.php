@@ -1,4 +1,9 @@
 <?php
+/**
+*   Classe que irá gerar os LOGS
+*   @author Guilherme Brito
+*   @version 1.0
+*/
 namespace GORM;
 trait Utils{
 
