@@ -6,6 +6,7 @@ Informações adicionais, para utilizar é so extender o a classe Model do GORM.
 # Utilização
 Para a utilização as Entidades tem que representar fielmente a tabela do banco de dados.
 A classe Entidade tem que implementar o toArray();
+
 # EX: Tabela Usuario.
 
 id int,
@@ -14,6 +15,7 @@ nome varchar,
 # Class
 
 class Usuario extends GORM\Model{
+	
 	private id;
 	private nome;
 
@@ -49,11 +51,13 @@ Neste caso ele irá buscar na tabela Usuario um registro com nome=João
 	$usuario->select();
 
 Neste caso ele irá ignorar o conteudo da classe e ira buscar um id=1
+	
 	$usuario = new Usuario();
 	$usuario->select('id' => 1);
 
 
 Caso utilize Inner
+	
 	$usuario = new Usuario();
 	$usuario->select(array(
 		'inner' => array( 'nome_da_tabela_do_Inner' => array('campo_do_usuario' => 'campo_da_tabela_do_inner') )
@@ -62,6 +66,7 @@ Caso utilize Inner
 
 # Where
 Neste caso iremos utilizar da seguinte forma
+	
 	$data = array('nome' => "João", 'cpf' => "1112223344");
 	$usuario = new Usuario($data);
 	$usuario->select('WHERE' => array('nome' => $data['nome']));
@@ -76,6 +81,7 @@ Neste caso iremos utilizar da seguinte forma
 											);
 
 #WHERE + OR
+	
 	$data = array('nome' => "João", 'cpf' => "1112223344");
 	$usuario = new Usuario($data);
 	$usuario->select('WHERE' => array('OR' => array(
