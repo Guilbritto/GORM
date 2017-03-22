@@ -5,14 +5,15 @@
 *   @version 1.0
 */
 namespace GORM;
-trait Utils{
+trait Utils
+{
 
 	/**
 	 *  Função para gerar logs das informações passadas como parametro
 	 * @param String $string
 	 * @return void
 	 */
-	public static final function Error($string){
+	public function Error($string){
 		//Cria o arquivo se ele não existir
 		$handle = fopen("backend.log", "a");
 		//Escrevo no arquivo aberto
@@ -26,7 +27,7 @@ trait Utils{
 	 * @param String $string
 	 * @return void
 	 */
-	public static final function Message($string){
+	public function Message($string){
 		//Cria o arquivo se ele não existir
 		$handle = fopen("backend.log", "a");
 		//Escrevo no arquivo aberto
@@ -40,7 +41,7 @@ trait Utils{
 	 * @param String $string
 	 * @return void
 	 */
-	public static final function Debug($string){
+	public function Debug($string){
 		//Cria o arquivo se ele não existir
 		$handle = fopen("backend.log", "a");
 		//Escrevo no arquivo aberto
@@ -48,5 +49,5 @@ trait Utils{
 		fwrite($handle, "\n".$data." [DEBUG]:".$string);
 		//fecha o arquivo;
 		fclose($handle);
-	}	
+	}
 }

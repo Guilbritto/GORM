@@ -31,5 +31,6 @@ class ConnectionFactory{
 			Throw new Exception("Ocorreu um problema ao tentar conectar o banco de dados ".$e);
 			return false;
 		}
-    }      
+		
+    }
 }
