@@ -1,11 +1,13 @@
 <?php
 namespace GORM;
 use Exception;
-//include('../gorm.php');
+include('gorm.php');
 class Model {
+use Database;
     /**
      * Variável para armazenar as configurações
-     *
+     * db = recebe uma instancia da conexão com banco de dados;
+     *  
      * @var Mixed
      */
     public $configuration;
@@ -59,5 +61,14 @@ class Model {
             throw new Exception("Arquivo não Existe", 1);
         }
     }
-
+    /**
+     * Retorna uma instancia da classe que esta solicitando uma determinada função
+     *
+     * @return void
+     */
+    public static function getCalledClass(){
+        $cls = get_called_class();
+        $cls = $cls::getInstance();
+        return $cls;
+    }
 }

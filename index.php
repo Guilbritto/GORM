@@ -9,4 +9,4 @@ class Animal extends \GORM\Model{
 }
 $animal = Animal::getInstance();
 $animal->raca = 'basset';
-print_r($animal->configuration);
+print_r($animal::getConnection());
