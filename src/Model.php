@@ -2,27 +2,16 @@
 namespace GORM;
 use Exception;
 include('gorm.php');
-class Model {
-use Database;
+class Model 
+{
+use Database, Init, Persistent, Builder;
     /**
      * Variável para armazenar as configurações
-     * db = recebe uma instancia da conexão com banco de dados;
+     * sql = recebe o query sql que será executada
      *  
      * @var Mixed
      */
-    public $configuration;
-    /**
-     * Variavel que irá armazenar qual é a tabela que será utilizada nesta modificação
-     *
-     * @var string
-     */
-    protected $table;
-    /**
-     * Array com as configurações do sistema, tais como banco de dados e modo de execução
-     *
-     * @var Mixed
-     */
-    protected $config;
+    private $configuration;
     /**
      * Metodo que implementa o metodo Singleton
      *
@@ -34,7 +23,10 @@ use Database;
         if (null === $instance) {
             $instance = new static();
         }
-        $instance->loadConf();
+        //Verifica se as configurações já foram carregadas
+        if(empty($instance->configuration)){
+            $instance->loadConf();
+        }
         return $instance;
     }
     /**
@@ -44,10 +36,13 @@ use Database;
      * @return Mixed
      */
     public function loadConf(){
+        //Checa a existencia do arquivo de configuração
         if (file_exists('gorm.conf')){
+            // Checa se é possivel ler o arquivo de configuração
             if (is_readable('gorm.conf')){
                 $arch = file('gorm.conf');
                 foreach ($arch as $key => $value) {
+                    //Verifica se a linha do arquivo começa com # (se é um comentário)
                     if (substr($value, 0, 1)!= "#"){
                         $arr = explode('=', $value);
                         $conf[trim($arr[0])] = trim($arr[1]);
@@ -69,6 +64,26 @@ use Database;
     public static function getCalledClass(){
         $cls = get_called_class();
         $cls = $cls::getInstance();
-        return $cls;
+		return $cls;
+    }
+    /**
+     * Metodo para carregar a tabela que será trabalhada
+     *
+     * @return void
+     */
+    public function loadTable(){
+        $this->configuration['table'] = get_called_class();
+        $this->configuration['table'] = str_replace("\\", "/", strtolower(get_called_class()));
+		$this->configuration['table'] = explode('/', $this->configuration['table']);
+		$this->configuration['table'] = $this->configuration['table'][count($this->configuration['table']) -1];     
+    }
+    /**
+     * Seta qual é a Primary Key de uma determinada tabela;
+     *
+     * @param String $pk
+     * @return void
+     */
+    public function setPrimaryKey($pk){
+        $this->configuration['primaryKey'] = $pk;
     }
 }

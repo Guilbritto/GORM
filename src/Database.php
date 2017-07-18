@@ -1,7 +1,8 @@
 <?php
 namespace GORM;
 use PDO;
-trait Database{
+trait Database
+{
     /**
      * Variavel que irá armazenar a conexão com Banco de Daos
      *
@@ -22,7 +23,6 @@ trait Database{
             self::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             self::$connection->setAttribute(PDO::ATTR_ORACLE_NULLS, PDO::NULL_EMPTY_STRING);
         }
-        $cls->configuration['db'] = self::$connection;
         return self::$connection;    
     }
 }
