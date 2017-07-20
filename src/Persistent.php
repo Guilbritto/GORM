@@ -32,7 +32,7 @@ trait Persistent
                         echo "Erro de sintaxe : ". $this->configuration['sql'];
                         break;
                     default:
-                        echo $e->getMessage();
+                        echo $e->getMessage()."<br>". $this->configuration['sql'];
                         break;
                 }
             }
@@ -85,7 +85,7 @@ trait Persistent
                         echo "Erro de sintaxe : ". $this->configuration['sql'];
                         break;
                     default:
-                        echo $e->getMessage();
+                        echo $e->getMessage()."<br>". $this->configuration['sql'];
                         break;
                 }
             }

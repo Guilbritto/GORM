@@ -4,7 +4,7 @@ use Exception;
 include('gorm.php');
 class Model 
 {
-use Database, Init, Persistent, Builder;
+use Database, Init, Persistent, Builder, Finder;
     /**
      * Variável para armazenar as configurações
      * sql = recebe o query sql que será executada
@@ -85,5 +85,20 @@ use Database, Init, Persistent, Builder;
      */
     public function setPrimaryKey($pk){
         $this->configuration['primaryKey'] = $pk;
+    }
+    /**
+     * Seta qual é o campo que não pode ser repetido no banco de dados
+     *
+     * @param Strint $unique
+     * @return void
+     */
+    public function setUniqueFild($unique){
+        $this->configuration['uniqueFild'] = $unique;
+    }
+
+    public function load($array = []){
+        foreach ($array as $key => $value) {
+            $this->$key = $value;
+        }
     }
 }

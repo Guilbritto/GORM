@@ -9,6 +9,7 @@ class Animal extends \GORM\Model{
     public $tipo;
 }
 $animal = Animal::getInstance();
-$animal->id = 2;
-$animal->raca = 'Doberman';
-print_r($animal->update());
+$animal->raca = 'Pastor Alemão';
+$animal->setUniqueFild('raca');
+$animal->makeSelect()->fields('bosta')->where('tipo=bosta');
+$animal->select();

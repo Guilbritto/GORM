@@ -71,4 +71,42 @@ trait Builder{
         }
         $this->configuration['sql'] = $sql;
     }
+    /**
+     * Cria uma parte do sql para fazer o select();
+     * 
+     * @return this
+     */
+    public function makeSelect(){
+        $sql = "SELECT * FROM ";
+        $this->loadTable();
+        $sql .= $this->configuration['table'];
+        $this->configuration['sql'] = $sql;
+        return $this;
+    }
+    /**
+     * Gera os campos que serão buscados, 
+     * EX: SELECT $fields FROM $tabela
+     *
+     * @param String $options
+     * @return this
+     */
+    public function fields($options){
+        if (isset($this->configuration['sql'])){
+            $sql = $this->configuration['sql'];
+            $this->configuration['sql'] = str_replace('*', $options, $sql);   
+        }
+            return $this;   
+    }
+    /**
+     * Gera os campos do WHERE
+     *
+     * @param String $options
+     * @return this
+     */
+    public function where($options){
+        if (isset($this->configuration['sql'])){
+            $this->configuration['sql'] .=" WHERE ".  $options;      
+        }
+        return $this;
+    }
 }
